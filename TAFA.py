@@ -319,9 +319,10 @@ try:
 	from getpass import getpass as click
 	exec(open('module.py').read())
 	home()
+	
 except KeyboardInterrupt:
 	print("   [!] Exit: Ok")
 except ImportError as e:
 	print("[!] " + str(e))
-#except Exception as e:
-#	print("   [!] " + str(e))
+except Exception as e:
+	print("   [!] " + str(e))
