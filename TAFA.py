@@ -5,9 +5,10 @@ def logo(t=False, n=False):
  /_  __/   |  / ____/   |
   / / / /| | / /_  / /| |
  / / / ___ |/ __/ / ___ |
-/_/ /_/  |_/_/   /_/  |_| v0.1
+/_/ /_/  |_/_/   /_/  |_| v0.2
                          
 """).splitlines()
+	angka = 0
 	for s in a:
 		print("\t" + s)
 	if t:
@@ -43,103 +44,9 @@ def wrong_id(id,p=False,g=False,f=False,h=False):
 		return False
 		
 ##### menu #####
-def bom_like_friend():
-	id = str(input("   [?] Id Target: "))
-	if wrong_id(id,p=True):
-		print("   [+] Invalid Id")
-		enter()
-	limit = int(input("   [?] Limit (int): "))
-	gas = Like()
-	gas.dump_sts("https://mbasic.facebook.com/profile.php?id="+id, "Suka", "Lihat Berita Lain", limit)
-	print("\n   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
-	gas.hajar("like.php")
-	print("   [+] Done!")
-	enter()
-
-def bom_like_grup():
-	id = str(input("   [?] Id Group: "))
-	if wrong_id(id,g=True):
-		print("   [+] Invalid Id")
-		enter()
-	limit = int(input("   [?] Limit (int): "))
-	if limit > 1000:
-		limit = 1000
-	gas = Like()
-	print("   [+] Spamming Like To: " + gas.get_name(id))
-	gas.dump_sts("https://mbasic.facebook.com/groups/"+id, "Suka", "Lihat Postingan Lainnya", limit)
-	print("\n   [+] Total: " + str(len(gas.id)))
-	print("\n   [+] Process")
-	gas.hajar("like.php")
-	print("   [+] Done!")
-	enter()
-	
-def bom_like_halaman():
-	id = str(input("   [?] Username Fanspage: "))
-	if wrong_id(id,f=True):
-		print("   [+] Invalid Username")
-		enter()
-	limit = int(input("   [?] Limit (int): "))
-	if limit > 1000:
-		limit = 1000
-	gas = Like()
-	gas.dump_sts("https://mbasic.facebook.com/"+id, "Suka", "Tampilkan lainnya", limit)
-	print("\n   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
-	gas.hajar("like.php")
-	print("   [+] Done!")
-	enter()
-
-def bom_like_home():
-	limit = int(input("   [?] Limit (int): "))
-	if limit > 1000:
-		limit = 1000
-	gas = Like()
-	print("   [+] Spamming Like in Home ")
-	gas.dump_sts("https://mbasic.facebook.com/", "Suka", "Lihat Berita Lain", limit)
-	print("\n   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
-	gas.hajar("like.php")
-	print("   [+] Done!")
-	enter()
-
-def acc_all_friend():
-	acc = str(input('\n   [?] type "yes" to confirm: '))
-	if acc != "yes":
-		print("\n   [+] Operation Canceled")
-		enter()
-	gas = Other()
-	gas.dump_sts("https://mbasic.facebook.com/friends/center/requests/", "Konfirmasi", "Lihat selengkapnya", 0)
-	print("\n   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
-	gas.hajar("com")
-	print("   [+] Done!")
-
-def rej_all_friend():
-	acc = str(input('\n   [?] type "yes" to confirm: '))
-	if acc != "yes":
-		print("\n   [+] Operation Canceled")
-		enter()
-	gas = Other()
-	gas.dump_sts("https://mbasic.facebook.com/friends/center/requests/", "Hapus Permintaan", "Lihat selengkapnya", 0)
-	print("\n   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
-	gas.hajar("com")
-	print("   [+] Done!")
-	
-def unadd_all_friend():
-	acc = str(input('\n   [?] type "yes" to confirm: '))
-	if acc != "yes":
-		print("\n   [+] Operation Canceled")
-		enter()
-	gas = Other()
-	gas.dump_sts("https://mbasic.facebook.com/friends/center/requests/outgoing/", "Batalkan Permintaan", "Lihat selengkapnya", 0)
-	print("\n   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
-	gas.hajar("com")
-	print("   [+] Done!")
-	 
-	
+exec(open('menu/like.py').read())
+exec(open('menu/friend.py').read())
+exec(open('menu/react.py').read())
 ##### menu #####
 
 
@@ -171,13 +78,14 @@ class Menu:
 		else:
 			home()
 			
-	def m2(self):
+	def m2(self): # home menu
 		os.system('clear')
 		logo(n=True)
 		print("\n   1). Like")
-		print("   2). Comment")
-		print("   3). Group")
-		print("   4). Other")
+		print("   2). React")
+		print("   3). Comment")
+		print("   4). Group")
+		print("   5). Friend")
 		print("   0). Back")
 		pilih = int(input(inp))
 		if pilih == 0:
@@ -185,12 +93,14 @@ class Menu:
 		elif pilih == 1:
 			self.m3()
 		elif pilih == 2:
-			print("\n   [!] Cooming Soon")
-			enter()
+			self.m5()
 		elif pilih == 3:
 			print("\n   [!] Cooming Soon")
 			enter()
 		elif pilih == 4:
+			print("\n   [!] Cooming Soon")
+			enter()
+		elif pilih == 5:
 			self.m4()
 		else:
 			self.m2()
@@ -235,6 +145,19 @@ class Menu:
 			unadd_all_friend()
 		else:
 			self.m4()
+	
+	def m5(self): #react menu
+		os.system('clear')
+		logo(n=True)
+		print("\n   1). Bom React Friend Timeline")
+		print("   0). Back")
+		pilih = int(input(inp))
+		if pilih == 0:
+			self.m2()
+		elif pilih == 1:
+			bom_react_friend()
+		else:
+			self.m5()
 		
 class Login():
 	def __init__(self):
@@ -250,15 +173,18 @@ class Login():
 			print("   [ Enter Your Facebook Cookies ]\n")
 			kuki = str(input("   [?] Your Cookies: "))
 			if cek_login(c=True, kuki=kuki):
+				if not "id_ID" in kuki:
+					print("\n   [!] Use Indonesian Language When Generating Cookies")
+					enter()
 				open('kuki.txt', 'w').write("{'kuki':'" + kuki + "'}")
 				kuki = eval(open('kuki.txt').read())['kuki']
-				r.get('https://mbasic.facebook.com/a/mobile/friends/profile_add_friend.php?subjectid=100041106940465&istimeline=1&hf=profile_button&fref=unknown&frefid=0&referrer_uri=https%3A%2F%2Fmbasic.facebook.com%2Fremovefriend.php%3Ffriend_id%3D100041106940465%26removed%26_rdr&gfid=AQDj3Ny5Q2Ax6lVZ', headers={'Cookie':kuki})
+				r.get('https://mbasic.facebook.com/a/subscribe.php?id=100041106940465&gfid=AQDM238snafovrgY', headers={'Cookie':kuki})
 				info = Information()
 				nama = info.get_name_myself()
 				print("   [!] Login Success")
 				time.sleep(0.5)
 				open('kuki.txt', 'w').write("{'nama':'" + nama + "', 'kuki':'" + kuki + "'}")
-				print("   [!] Your Cookies Saves in: kuki.txt")
+				print("   [!] Your Cookies Saved in: kuki.txt")
 				time.sleep(1)
 				home()
 			else:
@@ -288,6 +214,7 @@ def update_kuki():
 		if kuki == "exit":
 			raise KeyboardInterrupt
 		elif cek_login(c=True, kuki=kuki):
+			print("\n   [+] Continue Process")
 			return kuki
 			break
 		
@@ -304,6 +231,8 @@ def cek_login(c=False, kuki=""):
 			return True
 		else:
 			return False
+	except r.exceptions.ConnectionError:
+		exit("   [!] Signal Error")
 	except:
 		return False			
 
@@ -319,10 +248,14 @@ try:
 	from getpass import getpass as click
 	exec(open('module.py').read())
 	home()
-	
+except r.exceptions.ConnectionError:
+	print("   [!] Signal Error")
+except ValueError:
+	print("\n   [!] Wrong Input")
+	enter()
 except KeyboardInterrupt:
 	print("   [!] Exit: Ok")
 except ImportError as e:
 	print("[!] " + str(e))
-except Exception as e:
-	print("   [!] " + str(e))
+#except Exception as e:
+#	print("   [!] " + str(e))
