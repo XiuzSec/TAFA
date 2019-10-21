@@ -257,5 +257,5 @@ except KeyboardInterrupt:
 	print("   [!] Exit: Ok")
 except ImportError as e:
 	print("[!] " + str(e))
-#except Exception as e:
-#	print("   [!] " + str(e))
+except Exception as e:
+	print("   [!] " + str(e))
