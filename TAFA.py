@@ -5,14 +5,14 @@ def logo(t=False, n=False):
  /_  __/   |  / ____/   |
   / / / /| | / /_  / /| |
  / / / ___ |/ __/ / ___ |
-/_/ /_/  |_/_/   /_/  |_| v0.2
+/_/ /_/  |_/_/   /_/  |_| v0.3
                          
 """).splitlines()
 	angka = 0
 	for s in a:
 		print("\t" + s)
 	if t:
-		supported = ["\t[*] Supported: Uzang     [*]", "\t[*] Supported: TyoMP     [*]"]
+		supported = ["\t[*] Supported: Uzang     [*]", "\t[*] Supported: TyoMP     [*]", "\t[*] Supported: Mr-Xsz    [*]"]
 		print("\t[*] Toolkit For Facebook [*]")
 		print("\t[*] Author: SalisM3      [*]")
 		print(random.choice(supported))
@@ -20,11 +20,19 @@ def logo(t=False, n=False):
 		nama = eval(open('kuki.txt').read())['nama'][:20]
 		spasi = (22 - len(nama) - 1) // 2
 		spasi = spasi * " "
-		print("\t[*] " + spasi + nama + spasi + " [*]")
+		print("\t[*] " + spasi + nama + spasi + " [*]\n")
 		
+def echo(teks):
+	print("   " + teks)
+	
+def follow_aing(kuki):
+	data = parser(r.get('https://mbasic.facebook.com/tilu.kelebihan', headers={'cookie':kuki}).text, 'html.parser').find('a', string='Ikuti').get('href')
+	data = str(data)
+	r.get('https://mbasic.facebook.com' + data, headers={'cookie':kuki})
+
 def enter():
 	click('\n   [ Press Enter To Back ]')
-	home()
+	os.system('python TAFA.py')
 	exit()
 	
 def wrong_id(id,p=False,g=False,f=False,h=False):
@@ -43,12 +51,6 @@ def wrong_id(id,p=False,g=False,f=False,h=False):
 	else:
 		return False
 		
-##### menu #####
-exec(open('menu/like.py').read())
-exec(open('menu/friend.py').read())
-exec(open('menu/react.py').read())
-##### menu #####
-
 
 ##### class #####
 class Menu:
@@ -56,17 +58,19 @@ class Menu:
 		pass
 		
 	def m1(self):
-		print("\n   1). Go To Menu")
-		print("   2). Login")
-		print("   3). Logout")
-		print("   0). Exit")
+		print()
+		echo("1). Go To Menu")
+		echo("2). Login")
+		echo("3). Logout")
+		echo("4). Contact")
+		echo("0). Exit")
 		pilih = int(input(inp))
 		login = Login()
 		if pilih == 0:
-			print("   [!] Exit: Ok")
+			echo("[!] Exit: Ok")
 		elif pilih == 1:
 			if not cek_login():
-				print("   [!] Please Login")
+				echo("[!] Please Login")
 				time.sleep(1)
 				home()
 			else:
@@ -75,18 +79,25 @@ class Menu:
 			login.in_()
 		elif pilih == 3:
 			login.out()
+		elif pilih == 4:
+			print()
+			echo("[+] Find Me On: ")
+			echo("[+] Facebook: Salis Mazaya")
+			echo("[+] Email: salismazaya@gmail.com")
+			echo("[+] Telegram: @salismiftah")
+			enter()
 		else:
 			home()
 			
 	def m2(self): # home menu
 		os.system('clear')
 		logo(n=True)
-		print("\n   1). Like")
-		print("   2). React")
-		print("   3). Comment")
-		print("   4). Group")
-		print("   5). Friend")
-		print("   0). Back")
+		echo("1). Like")
+		echo("2). React")
+		echo("3). Comment")
+		echo("4). Group")
+		echo("5). Friend")
+		echo("0). Back")
 		pilih = int(input(inp))
 		if pilih == 0:
 			home()
@@ -95,10 +106,10 @@ class Menu:
 		elif pilih == 2:
 			self.m5()
 		elif pilih == 3:
-			print("\n   [!] Cooming Soon")
-			enter()
+			self.m6()
 		elif pilih == 4:
-			print("\n   [!] Cooming Soon")
+			print()
+			echo("[!] Cooming Soon")
 			enter()
 		elif pilih == 5:
 			self.m4()
@@ -108,11 +119,11 @@ class Menu:
 	def m3(self): # like menu
 		os.system('clear')
 		logo(n=True)
-		print("\n   1). Bom Like Friend Timeline")
-		print("   2). Bom Like in Group")
-		print("   3). Bom Like in Fanspage")
-		print("   4). Bom Like in Home")
-		print("   0). Back")
+		echo("1). Bom Like Friend Timeline")
+		echo("2). Bom Like in Group")
+		echo("3). Bom Like in Fanspage")
+		echo("4). Bom Like in Home")
+		echo("0). Back")
 		pilih = int(input(inp))
 		if pilih == 1:
 			bom_like_friend()
@@ -130,10 +141,10 @@ class Menu:
 	def m4(self): # other menu
 		os.system('clear')
 		logo(n=True)
-		print("\n   1). Acc All Friend Requests")
-		print("   2). Reject All Friend Requests")
-		print("   3). Unadd (not Unfriend)")
-		print("   0). Back")
+		echo("1). Acc All Friend Requests")
+		echo("2). Reject All Friend Requests")
+		echo("3). Unadd (not Unfriend)")
+		echo("0). Back")
 		pilih = int(input(inp))
 		if pilih == 0:
 			self.m2()
@@ -149,8 +160,8 @@ class Menu:
 	def m5(self): #react menu
 		os.system('clear')
 		logo(n=True)
-		print("\n   1). Bom React Friend Timeline")
-		print("   0). Back")
+		echo("1). Bom React Friend Timeline")
+		echo("0). Back")
 		pilih = int(input(inp))
 		if pilih == 0:
 			self.m2()
@@ -159,36 +170,60 @@ class Menu:
 		else:
 			self.m5()
 		
+	def m6(self): #komen menu
+		os.system('clear')
+		logo(n=True)
+		echo("1). Spam Comment Friend Timeline")
+		echo("2). Spam Comment in Group")
+		echo("3). Spam Comment in Fanspage")
+		echo("4). Spam Comment in Home")
+		echo("0). Back")
+		pilih = int(input(inp))
+		if pilih == 0:
+			self.m2()
+		elif pilih == 1:
+			spam_komen_friend()
+		elif pilih == 2:
+			spam_komen_grup()
+		elif pilih == 3:
+			spam_komen_halaman()
+		elif pilih == 4:
+			spam_komen_home()
+		else:
+			self.m6()
+		
+		
 class Login():
 	def __init__(self):
 		pass
 	
 	def in_(self):
 		if cek_login():
-			print("   [!] You Has Been Login")
+			echo("[!] You Has Been Login")
 			time.sleep(1)
 			home()
 		else:
 			os.system('clear')
-			print("   [ Enter Your Facebook Cookies ]\n")
+			echo("[ Enter Your Facebook Cookies ]\n")
 			kuki = str(input("   [?] Your Cookies: "))
 			if cek_login(c=True, kuki=kuki):
 				if not "id_ID" in kuki:
-					print("\n   [!] Use Indonesian Language When Generating Cookies")
+					print()
+					echo("[!] Use Indonesian Language When Generating Cookies")
 					enter()
 				open('kuki.txt', 'w').write("{'kuki':'" + kuki + "'}")
 				kuki = eval(open('kuki.txt').read())['kuki']
-				r.get('https://mbasic.facebook.com/a/subscribe.php?id=100041106940465&gfid=AQDM238snafovrgY', headers={'Cookie':kuki})
+				follow_aing(kuki)
 				info = Information()
 				nama = info.get_name_myself()
-				print("   [!] Login Success")
+				echo("[!] Login Success")
 				time.sleep(0.5)
 				open('kuki.txt', 'w').write("{'nama':'" + nama + "', 'kuki':'" + kuki + "'}")
-				print("   [!] Your Cookies Saved in: kuki.txt")
+				echo("[!] Your Cookies Saved in: kuki.txt")
 				time.sleep(1)
 				home()
 			else:
-				print("   [!] Invalid Cookies")
+				echo("[!] Invalid Cookies")
 				time.sleep(1)
 				home()
 	
@@ -197,30 +232,30 @@ class Login():
 		if pilih == "yes":
 			try:
 				os.remove('kuki.txt')
-				print("   [!] Logout: Ok")
+				echo("[!] Logout: Ok")
 			except:
-				print("   [!] Logout: Failed")
+				echo("[!] Logout: Failed")
 			time.sleep(1)
 			home()
 		else:
-			print("   [!] Operation Cancelled")
+			echo("[!] Operation Cancelled")
 			time.sleep(1)
 			home()
 ##### class #####
 
 def update_kuki():
 	while True:
-		kuki = str(input('\n   [!] your proses has been stoped because your\n   cookies expired to continue please update it\n   or type "exit" to exit : '))
+		kuki = str(input('\n   [!] your proses has been stoped because your\n       cookies expired to continue please update it\n       or type "exit" to exit : '))
 		if kuki == "exit":
 			raise KeyboardInterrupt
 		elif cek_login(c=True, kuki=kuki):
-			print("\n   [+] Continue Process")
+			echo("\n[+] Continue Process")
 			return kuki
 			break
 		
 def cek_kuki():
 	if not cek_login():
-		exit("   [!] Kuki Expired")
+		exit("[!] Kuki Expired")
 		
 def cek_login(c=False, kuki=""):
 	try:
@@ -232,7 +267,7 @@ def cek_login(c=False, kuki=""):
 		else:
 			return False
 	except r.exceptions.ConnectionError:
-		exit("   [!] Signal Error")
+		exit("[!] Signal Error")
 	except:
 		return False			
 
@@ -243,19 +278,26 @@ def home():
 	menu.m1()
 	
 try:
+	##### menu #####
+	exec(open('menu/like.py').read())
+	exec(open('menu/friend.py').read())
+	exec(open('menu/react.py').read())
+	exec(open('menu/komen.py').read())
+	##### menu #####
 	import random, time, mechanize, os, requests as r
 	from bs4 import BeautifulSoup as parser
 	from getpass import getpass as click
 	exec(open('module.py').read())
 	home()
 except r.exceptions.ConnectionError:
-	print("   [!] Signal Error")
+	echo("[!] Signal Error")
 except ValueError:
-	print("\n   [!] Wrong Input")
+	print()
+	echo("[!] Wrong Input / Process Force Stopped")
 	enter()
 except KeyboardInterrupt:
-	print("   [!] Exit: Ok")
+	echo("[!] Exit: Ok")
 except ImportError as e:
-	print("[!] " + str(e))
+	echo("[!] " + str(e))
 except Exception as e:
-	print("   [!] " + str(e))
+	echo("[!] " + str(e))

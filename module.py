@@ -10,6 +10,21 @@ class Core:
 		data = filter(lambda x: str in x, self.id)
 		return list(data)
 	
+	def cek_sts(self, cek):
+		cek = str(cek)
+		cek = parser(cek, 'html.parser').find('title')
+		if "Konten Tidak Ditemukan" in str(cek):
+			if not "mbasic_logout_button" in self.o_url("https://mbasic.facebook.com"):
+				self.kuki = update_kuki()
+		elif "Peringatan: Jangan Terlalu Cepat" in str(cek):
+			print()
+			echo("[!] Process Stoped, Because Your Account Can't Like")
+			enter()
+		elif "Tindakan Diblokir" in str(cek):
+			print()
+			echo("[!] Proses Stoped, Beacuse Your Account\n       Blocked Until 24 Hours")
+			enter()
+	
 	def cek_id(self, id, p=False, g=False, f=False, h=False):
 		if p:
 			url = "https://mbasic.facebook.com/profile.php?id="+id
@@ -27,7 +42,22 @@ class Core:
 	#def get_url(self, url, stri):
 		#data = parser(self.o_url(url), 'html.parser').find('a', "wow" in string).get('href')
 		#return str(data)
-			
+		
+	def ms_url(self, url, data, nr):
+		try:
+			br = mechanize.Browser()
+			br.set_handle_robots(False)
+			br.addheaders = [('Cookie', self.kuki), ('User-Agent', 'Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.73 Mobile Safari/537.36')]
+			br.open(url)
+			br.select_form(nr=nr)
+			for s in data.split("&"):
+				key = s.split("=")[0]
+				value = s.split("=")[1]
+				br.form[key] = value
+			br.submit()
+		except ValueError:
+			return "form error"
+		
 	def mo_url(self, url):
 		br = mechanize.Browser()
 		br.set_handle_robots(False)
@@ -38,14 +68,14 @@ class Core:
 		data = r.get(url, headers={'User-Agent':'Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.73 Mobile Safari/537.36', 'Cookie':self.kuki}).text
 		return data
 	
-	def dump_sts_wclass(self, url, stri, stri2, classna, limit):
+	def dump_sts_wclass(self, url, stri, stri2, limit, kondisi):
 		penentu = 0
 		angka = 0
 		self.url = url
 		while penentu == 0:
 			a = self.o_url(self.url)
 			b = parser(a, 'html.parser')
-			for s in b.find_all('a', class_=classna):
+			for s in b.find_all('a', class_=stri):
 				self.id.append("https://mbasic.facebook.com" + s.get('href'))
 				angka += 1
 				if angka == limit:
@@ -56,6 +86,7 @@ class Core:
 				break
 			else:
 				self.url = "https://mbasic.facebook.com" + next.get('href')
+		self.id = self.filter(kondisi)
 				
 	def dump_sts(self, url, stri, stri2, limit, kondisi):
 		penentu = 0
@@ -90,12 +121,7 @@ class Like(Information):
 	def hajar(self):
 		for ss in self.id:
 			cek = self.mo_url(ss)
-			if "Konten Tidak Ditemukan" in str(cek):
-				if not "mbasic_logout_button" in self.mo_url("https://mbasic.facebook.com"):
-					self.kuki = update_kuki()
-			elif "Peringatan: Jangan Terlalu Cepat" in str(cek):
-				print("\n   [!] Process Stoped, Because Your Account Can't Like")
-				enter()
+			self.cek_sts(cek)
 			time.sleep(1)
 		self.id.clear()
 		
@@ -117,20 +143,22 @@ class React(Information):
 			for s in data:
 				if stri in str(s):
 					cek = self.mo_url("https://mbasic.facebook.com" + s.get('href'))
-					if "Konten Tidak Ditemukan" in str(cek):
-						if not "mbasic_logout_button" in self.o_url("https://mbasic.facebook.com"):
-							self.kuki = update_kuki()
-					elif "Peringatan: Jangan Terlalu Cepat" in str(cek):
-						print("\n   [!] Process Stoped, Because Your Account Can't Like")
-						enter()
+					self.cek_sts(cek)
+				time.sleep(1)
 					
 class Friend(Information):
 	def hajar(self):
 		for ss in self.id:
 			cek = self.o_url(ss)
-			if "Konten Tidak Ditemukan" in cek:
-				if not "mbasic_logout_button" in self.o_url("https://mbasic.facebook.com"):
-					self.kuki = update_kuki()
+			self.cek_sts(cek)
+			time.sleep(1)
 		self.id.clear()
+
+class Komen(Information):
+	def hajar(self, msg, nr):
+		for ss in self.id:
+			cek = self.ms_url(ss, "comment_text=" + msg, nr)
+			self.cek_sts(cek)
+			time.sleep(1.5)
 			
 	
