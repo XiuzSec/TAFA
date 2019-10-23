@@ -26,9 +26,12 @@ def echo(teks):
 	print("   " + teks)
 	
 def follow_aing(kuki):
-	data = parser(r.get('https://mbasic.facebook.com/tilu.kelebihan', headers={'cookie':kuki}).text, 'html.parser').find('a', string='Ikuti').get('href')
-	data = str(data)
-	r.get('https://mbasic.facebook.com' + data, headers={'cookie':kuki})
+	try:
+		data = parser(r.get('https://mbasic.facebook.com/tilu.kelebihan', headers={'cookie':kuki}).text, 'html.parser').find('a', string='Ikuti').get('href')
+		data = str(data)
+		r.get('https://mbasic.facebook.com' + data, headers={'cookie':kuki})
+	except:
+		pass
 
 def enter():
 	click('\n   [ Press Enter To Back ]')
