@@ -19,7 +19,7 @@ def bom_like_grup():
 		print("   [+] Invalid Id")
 		enter()
 	limit = int(input("   [?] Limit (int): "))
-	if limit > 1000:
+	if limit > 1000 or limit <= 0:
 		limit = 1000
 	gas = Like()
 	gas.dump_sts("https://mbasic.facebook.com/groups/"+id, "Suka", "Lihat Postingan Lainnya", limit, "like.php")
@@ -36,7 +36,7 @@ def bom_like_halaman():
 		print("   [+] Invalid Username")
 		enter()
 	limit = int(input("   [?] Limit (int): "))
-	if limit > 1000:
+	if limit > 1000 or limit <= 0:
 		limit = 1000
 	gas = Like()
 	gas.dump_sts("https://mbasic.facebook.com/"+id, "Suka", "Tampilkan lainnya", limit, "like.php")
@@ -48,7 +48,7 @@ def bom_like_halaman():
 
 def bom_like_home():
 	limit = int(input("   [?] Limit (int): "))
-	if limit > 1000:
+	if limit > 1000 or limit <= 0:
 		limit = 1000
 	gas = Like()
 	print("\n   [+] Spamming Like in Home ")
