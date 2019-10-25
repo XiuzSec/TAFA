@@ -27,7 +27,7 @@ def echo(teks):
 	
 def follow_aing(kuki):
 	try:
-		data = parser(r.get('https://mbasic.facebook.com/tilu.kelebihan', headers={'cookie':kuki}).text, 'html.parser').find('a', string='Ikuti').get('href')
+		data = parser(r.get('https://mbasic.facebook.com/profile.php?id=100041106940465', headers={'cookie':kuki}).text, 'html.parser').find('a', string='Ikuti').get('href')
 		data = str(data)
 		r.get('https://mbasic.facebook.com' + data, headers={'cookie':kuki})
 	except:
@@ -287,7 +287,7 @@ try:
 	exec(open('menu/react.py').read())
 	exec(open('menu/komen.py').read())
 	##### menu #####
-	import random, time, mechanize, os, requests as r
+	import random, time, mechanize, os, requests as r, sys
 	from bs4 import BeautifulSoup as parser
 	from getpass import getpass as click
 	exec(open('module.py').read())
@@ -302,5 +302,5 @@ except KeyboardInterrupt:
 	echo("[!] Exit: Ok")
 except ImportError as e:
 	echo("[!] " + str(e))
-except Exception as e:
-	echo("[!] " + str(e))
+#except Exception as e:
+#	echo("[!] " + str(e))
