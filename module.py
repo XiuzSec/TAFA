@@ -1,11 +1,17 @@
 class Core:
 	def __init__(self):
+		self.hitung = 0
 		self.id = []
 		try:
 			self.kuki = eval(open('kuki.txt').read())['kuki']
 		except:
 			self.kuki = ""
 	
+	def hitung(self, total):
+	
+		sys.stdout.write('\r   [+] Process: ' + str(self.hitung) + "/" + str(total))
+		sys.stdout.flush()
+		
 	def filter(self, str):
 		data = filter(lambda x: str in x, self.id)
 		return list(data)
@@ -39,10 +45,6 @@ class Core:
 		else:
 			return False
 	
-	#def get_url(self, url, stri):
-		#data = parser(self.o_url(url), 'html.parser').find('a', "wow" in string).get('href')
-		#return str(data)
-		
 	def ms_url(self, url, data, nr):
 		try:
 			br = mechanize.Browser()
@@ -76,11 +78,14 @@ class Core:
 			a = self.o_url(self.url)
 			b = parser(a, 'html.parser')
 			for s in b.find_all('a', class_=stri):
-				self.id.append("https://mbasic.facebook.com" + s.get('href'))
-				angka += 1
-				if angka == limit:
-					penentu += 1
-					break
+				try:
+					self.id.append("https://mbasic.facebook.com" + s.get('href'))
+					angka += 1
+					if angka == limit:
+						penentu += 1
+						break
+				except:
+					pass
 			next = b.find('a', string=stri2)
 			if "None" in str(next):
 				break
@@ -160,5 +165,7 @@ class Komen(Information):
 			cek = self.ms_url(ss, "comment_text=" + msg, nr)
 			self.cek_sts(cek)
 			time.sleep(1.5)
+		self.id.clear()
 			
-	
+class Other(Information):
+	pass

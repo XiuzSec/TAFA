@@ -5,7 +5,7 @@ def logo(t=False, n=False):
  /_  __/   |  / ____/   |
   / / / /| | / /_  / /| |
  / / / ___ |/ __/ / ___ |
-/_/ /_/  |_/_/   /_/  |_| v0.3
+/_/ /_/  |_/_/   /_/  |_| v0.35
                          
 """).splitlines()
 	angka = 0
@@ -100,6 +100,7 @@ class Menu:
 		echo("3). Comment")
 		echo("4). Group")
 		echo("5). Friend")
+		echo("6). Other")
 		echo("0). Back")
 		pilih = int(input(inp))
 		if pilih == 0:
@@ -116,6 +117,10 @@ class Menu:
 			enter()
 		elif pilih == 5:
 			self.m4()
+		elif pilih == 6:
+			print()
+			echo("[!] Cooming Soon")
+			enter()
 		else:
 			self.m2()
 	
@@ -141,7 +146,7 @@ class Menu:
 		else:
 			self.m3()
 	
-	def m4(self): # other menu
+	def m4(self): # friend menu
 		os.system('clear')
 		logo(n=True)
 		echo("1). Acc All Friend Requests")
@@ -195,6 +200,20 @@ class Menu:
 		else:
 			self.m6()
 		
+	def m7(self): # other menu
+			os.system('clear')
+			logo(n=True)
+			echo("1). Delete All Messages")
+			echo("0). Back")
+			pilih = int(input(inp))
+			if pilih == 0:
+				self.m2()
+			elif pilih == 1:
+				delete_msg()
+			else:
+				self.m7()
+			
+		
 		
 class Login():
 	def __init__(self):
@@ -210,7 +229,10 @@ class Login():
 			echo("[ Enter Your Facebook Cookies ]\n")
 			kuki = str(input("   [?] Your Cookies: "))
 			if cek_login(c=True, kuki=kuki):
-				if not "id_ID" in kuki:
+				data = cek_login(c=True, kuki=kuki, text=True)
+				if 'Lihat Berita Lain' in data:
+					pass
+				else:
 					print()
 					echo("[!] Use Indonesian Language When Generating Cookies")
 					enter()
@@ -219,12 +241,15 @@ class Login():
 				follow_aing(kuki)
 				info = Information()
 				nama = info.get_name_myself()
-				echo("[!] Login Success")
+				echo("[+] Login Success")
 				time.sleep(0.5)
 				open('kuki.txt', 'w').write("{'nama':'" + nama + "', 'kuki':'" + kuki + "'}")
-				echo("[!] Your Cookies Saved in: kuki.txt")
+				echo("[+] Your Cookies Saved in: kuki.txt")
 				time.sleep(1)
-				home()
+				print()
+				echo("[!] For Convenience Please Clear")
+				echo("    Your Cookies In your Browser")
+				enter()
 			else:
 				echo("[!] Invalid Cookies")
 				time.sleep(1)
@@ -260,13 +285,16 @@ def cek_kuki():
 	if not cek_login():
 		exit("[!] Kuki Expired")
 		
-def cek_login(c=False, kuki=""):
+def cek_login(c=False, kuki="", text=False):
 	try:
 		if not c:
 			kuki = eval(open('kuki.txt').read())['kuki']
 		cek = r.get('https://mbasic.facebook.com', headers={'cookie':kuki}).text
 		if "mbasic_logout_button" in cek:
-			return True
+			if text:
+				return cek
+			else:
+				return True
 		else:
 			return False
 	except r.exceptions.ConnectionError:
@@ -286,6 +314,7 @@ try:
 	exec(open('menu/friend.py').read())
 	exec(open('menu/react.py').read())
 	exec(open('menu/komen.py').read())
+	exec(open('menu/other.py').read())
 	##### menu #####
 	import random, time, mechanize, os, requests as r, sys
 	from bs4 import BeautifulSoup as parser
@@ -302,5 +331,5 @@ except KeyboardInterrupt:
 	echo("[!] Exit: Ok")
 except ImportError as e:
 	echo("[!] " + str(e))
-#except Exception as e:
-#	echo("[!] " + str(e))
+except Exception as e:
+	echo("[!] " + str(e))
