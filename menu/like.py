@@ -54,7 +54,7 @@ def bom_like_home():
 	print("\n   [+] Spamming Like in Home ")
 	gas.dump_sts("https://mbasic.facebook.com/", "Suka", "Lihat Berita Lain", limit, "like.php")
 	print("   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
+	echo("[+] Process")
 	gas.hajar()
 	print("   [+] Done!")
 	enter()
