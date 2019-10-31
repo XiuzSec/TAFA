@@ -11,9 +11,8 @@ def spam_komen_friend():
 		print("\n   [+] Spamming Comment To: " + gas.get_name(id))
 		gas.dump_sts("https://mbasic.facebook.com/profile.php?id="+id, "Berita Lengkap", "Lihat Berita Lain", limit, "com")
 		print("   [+] Total: " + str(len(gas.id)))
-		print("   [+] Process")
 		gas.hajar(msg, 0)
-		print("   [+] Done!")
+		print("\n   [+] Done!")
 		enter()
 
 def spam_komen_grup():
@@ -30,8 +29,8 @@ def spam_komen_grup():
 		echo("[+] Spamming Comment To: " + gas.get_name(id))
 		gas.dump_sts("https://mbasic.facebook.com/groups/"+id, "Berita Lengkap", "Lihat Postingan Lainnya", limit, "com")
 		echo("[+] Total: " + str(len(gas.id)))
-		echo("[+] Process")
 		gas.hajar(msg, 1)
+		print()
 		echo("[+] Done!")
 		enter()
 
@@ -48,8 +47,8 @@ def spam_komen_halaman():
 		print()
 		gas.dump_sts("https://mbasic.facebook.com/"+id, "Berita Lengkap", "Tampilkan lainnya", limit, "com")
 		echo("[+] Total: " + str(len(gas.id)))
-		echo("[+] Process")
 		gas.hajar(msg, 0)
+		print()
 		echo("[+] Done!")
 		enter()
 
@@ -63,7 +62,7 @@ def spam_komen_home():
 	echo("[+] Spamming Comment in Home")
 	gas.dump_sts("https://mbasic.facebook.com/", "Berita Lengkap", "Lihat Berita Lain", limit, "com")
 	echo("[+] Total: " + str(len(gas.id)))
-	echo("[+] Process")
 	gas.hajar(msg, 0)
+	print()
 	echo("[+] Done!")
 	enter()

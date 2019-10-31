@@ -8,9 +8,8 @@ def bom_like_friend():
 	print("\n   [+] Spamming Like To: " + gas.get_name(id))
 	gas.dump_sts("https://mbasic.facebook.com/profile.php?id="+id, "Suka", "Lihat Berita Lain", limit, "like.php")
 	print("   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
 	gas.hajar()
-	print("   [+] Done!")
+	print("\n   [+] Done!")
 	enter()
 
 def bom_like_grup():
@@ -25,9 +24,8 @@ def bom_like_grup():
 	gas.dump_sts("https://mbasic.facebook.com/groups/"+id, "Suka", "Lihat Postingan Lainnya", limit, "like.php")
 	print("\n   [+] Spamming Like To: " + gas.get_name(id))
 	print("   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
 	gas.hajar()
-	print("   [+] Done!")
+	print("\n   [+] Done!")
 	enter()
 	
 def bom_like_halaman():
@@ -41,9 +39,9 @@ def bom_like_halaman():
 	gas = Like()
 	gas.dump_sts("https://mbasic.facebook.com/"+id, "Suka", "Tampilkan lainnya", limit, "like.php")
 	print("\n   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
 	gas.hajar()
-	print("   [+] Done!")
+	print()
+	echo("[+] Done!")
 	enter()
 
 def bom_like_home():
@@ -53,8 +51,8 @@ def bom_like_home():
 	gas = Like()
 	print("\n   [+] Spamming Like in Home ")
 	gas.dump_sts("https://mbasic.facebook.com/", "Suka", "Lihat Berita Lain", limit, "like.php")
-	print("   [+] Total: " + str(len(gas.id)))
-	echo("[+] Process")
+	echo("[+] Total: " + str(len(gas.id)))
 	gas.hajar()
-	print("   [+] Done!")
+	print()
+	echo("[+] Done!")
 	enter()

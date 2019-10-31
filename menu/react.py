@@ -17,7 +17,6 @@ def bom_react_friend():
 	print("\n   [+] Spamming React To: " + gas.get_name(id))
 	gas.dump_sts("https://mbasic.facebook.com/profile.php?id="+id, "Suka", "Lihat Berita Lain", limit, "like.php")
 	print("   [+] Total: " + str(len(gas.id)))
-	print("   [+] Process")
 	gas.hajar(pilih)
-	print("   [+] Done!")
+	print("\n   [+] Done!")
 	enter()
