@@ -67,11 +67,15 @@ class Core:
 		br.addheaders = [('Cookie', self.kuki), ('User-Agent', 'Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.73 Mobile Safari/537.36')]
 		return str(br.open(url).read())
 	
-	def o_url(self, url):
-		data = r.get(url, headers={'User-Agent':'Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.73 Mobile Safari/537.36', 'Cookie':self.kuki}).text
+	def o_url(self, url, bytes=False):
+		data = r.get(url, headers={'User-Agent':'Mozilla/5.0 (Linux; Android 8.1.0; Redmi 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.73 Mobile Safari/537.36', 'Cookie':self.kuki})
+		if bytes:
+			data = data.content
+		else:
+			data = data.text
 		return data
 	
-	def dump_sts_wclass(self, url, stri, stri2, limit, kondisi, class_na=False, href_na=False, req=True):
+	def dump_sts_wclass(self, url, stri, stri2, limit, kondisi, class_na=False, href_na=False, img=False, req=True, filter=True):
 		penentu = 0
 		angka = 0
 		self.url = url
@@ -83,11 +87,16 @@ class Core:
 			b = parser(a, 'html.parser')
 			if href_na:
 				data = b.find_all('a', href=stri)
+			elif img:
+				data = b.find_all('img')
 			else:
 				data = b.find_all('a', class_=stri)
 			for s in data:
 				try:
-					self.id.append("https://mbasic.facebook.com" + s.get('href'))
+					if img:
+						self.id.append(s.get('src'))
+					else:
+						self.id.append("https://mbasic.facebook.com" + s.get('href'))
 					angka += 1
 					if angka == limit:
 						penentu += 1
@@ -99,7 +108,8 @@ class Core:
 				break
 			else:
 				self.url = "https://mbasic.facebook.com" + next.get('href')
-		self.id = self.filter(kondisi)
+		if filter:
+			self.id = self.filter(kondisi)
 				
 	def dump_sts(self, url, stri, stri2, limit, kondisi):
 		penentu = 0
@@ -215,3 +225,43 @@ class Other(Information):
 				self.o_url('https://mbasic.facebook.com' + data)
 				self.hitung_process()
 		self.id.clear()
+		
+		
+	def download(self, path):
+		for s in self.id:
+			name = str(time.strftime('%Y-%H-%M-%S'))
+			data = parser(self.mo_url(s), 'html.parser').find_all('img')[1].get('src')
+			data = self.o_url(data, bytes=True)
+			open(f'{path}/{name}.jpg', 'wb').write(data)
+			self.hitung_process()
+		self.id.clear()
+	
+	def tampilkan_album(self):
+		data = parser(self.mo_url('https://mbasic.facebook.com/me/photos'), 'html.parser').find_all('a', href=True)
+		jumlah = 0
+		for s in data:
+			if '/albums/' in str(s):
+				jumlah += 1
+				self.id.append('https://mbasic.facebook.com' + s.get('href'))
+				nama_album = str(s).split(">")[1].replace("</a", "")
+				jumlah = str(jumlah)
+				echo(f"{jumlah}). {nama_album}")
+				jumlah = int(jumlah)
+		jumlah = str(jumlah)
+		echo("0" * len(jumlah) + "). Back")
+		del jumlah, nama_album
+		while True:
+			try:
+				pilih = int(input(inp))
+				if pilih == 0:
+					enter()
+					break
+				self.album = self.id[pilih - 1]
+				break
+			except:
+				pass
+		self.id.clear()
+	
+	def download_album(self):
+		pass
+			
